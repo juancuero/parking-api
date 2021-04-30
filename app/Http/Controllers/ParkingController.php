@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\Http\Requests\CustomerRequest;
 use App\Models\Customer;
 use App\Models\Place;
+use App\Models\TypeVehicle;
 use App\Http\Resources\CustomerResource; 
 use App\Http\Resources\PlaceResource; 
 use App\Http\Resources\TypeVehicleResource; 
@@ -239,12 +240,57 @@ class ParkingController extends Controller
      *      )
      *     )
     */
-    public function types()
+    public function types(Request $request)
     {
+        error_log("ues");
         $types =  TypeVehicle::all();
         return response()->json([
             'status'=> 200, 
             'types'=> TypeVehicleResource::collection($types),
+        ], 200);
+    }
+
+    /**
+     * @OA\Get(
+     *      path="/api/parkings/places/{type}",
+     *      tags={"Parking"},
+     *      summary="List Types Vehicles Places",
+     *      description="<b>Info Types.</b> <br> 
+                       Creation Date: 26/04/2021 08:00 PM <br> 
+                       Create By: Juan Cuero <br>
+                       Last Edit Date: 26/04/2021 08:00 PM <br> 
+            ",
+     *      security={{"apiAuth":{}}},
+     *        @OA\Parameter(
+     *          name="type",
+     *          description="id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ), 
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation", 
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     *     )
+    */
+    public function places(Request $request,$type)
+    {
+         
+        $places =  Place::where('type_vehicle_id',$type)->where('active',true)->get();
+        return response()->json([
+            'status'=> 200, 
+            'places'=> PlaceResource::collection($places),
         ], 200);
     }
 }

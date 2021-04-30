@@ -32,6 +32,8 @@ Route::group([
 });
 
 Route::group(['middleware' => 'auth:api'], function() {
+    Route::get('/parkings/types', [ParkingController::class, 'types'])->name('parkings-types');  
+    Route::get('/parkings/places/{type}', [ParkingController::class, 'places'])->name('parkings-places');  
     Route::post('/parkings/{customer}/checkout', [ParkingController::class, 'checkout'])->name('parkings-checkout');  
     Route::apiResource('parkings', ParkingController::class);
 });

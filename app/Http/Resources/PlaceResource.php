@@ -14,6 +14,10 @@ class PlaceResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'lot' => $this->typeVehicle->acronym. '-'.$this->lot ,
+            'active' => $this->active, 
+        ];
     }
 }
