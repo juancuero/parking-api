@@ -23,7 +23,7 @@ class CustomerResource extends JsonResource
             'leaving_date' => $this->leaving_date,
             'hours' => $this->hours,
             'created_at' => $this->created_at->format('Y-m-d H:i:s A'),
-            $this->mergeWhen($this->leaving_date == null, ['total_to_pay' => $this->hours *  $this->place->typeVehicle->price]),
+            $this->mergeWhen($this->leaving_date == null, ['amount' => $this->hours *  $this->place->typeVehicle->price]),
             $this->mergeWhen($this->leaving_date != null, ['amount' => $this->amount])
         ];
     }

@@ -26,6 +26,12 @@ class ParkingController extends Controller
                        Last Edit Date: 26/04/2021 06:00 PM <br> 
             ",
      *      security={{"apiAuth":{}}},
+    *      @OA\Parameter(
+     *         name="q",
+     *         in="query",
+     *         description="Busqueda",
+     *         required=false,
+     *      ), 
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation", 
@@ -40,9 +46,19 @@ class ParkingController extends Controller
      *      )
      *     )
     */
-    public function index()
+    public function index(Request $request)
     {
-        $customers =  Customer::all();
+        $busqueda = $request->get('q');
+
+        $customers = [];
+
+        if($busqueda != null){
+            $customers =  Customer::busqueda($busqueda)->get();
+        }else{ 
+            $customers =  Customer::all();
+        }
+
+
         return response()->json([
             'status'=> 200, 
             'customers'=> CustomerResource::collection($customers),

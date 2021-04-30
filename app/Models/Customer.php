@@ -50,7 +50,23 @@ class Customer extends Model
         }
 
         return $hours;
-    }    
+    } 
+    
+    public function scopeBusqueda($query, $titulo)
+    {
+        $campos = [
+        'name', 'placa', 'document_number'
+        ];
+
+        
+        if (trim($titulo) != "") {
+                foreach($campos as $attribute) {
+                     $query->orWhere($attribute, 'LIKE', "%{$titulo}%");
+                }
+
+        }
+
+    }
 
  
 

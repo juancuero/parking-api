@@ -34,6 +34,10 @@ Run the database migrations and default data
     User: juan.cuero
     Pass: juancuero123
 
+Run passport
+
+    php artisan passport:install
+
 Run documentation api
 
     php artisan l5-swagger:generate
