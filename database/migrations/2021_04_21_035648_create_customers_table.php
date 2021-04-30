@@ -17,8 +17,9 @@ class CreateCustomersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('placa');
-            $table->foreignId('places_id')->constrained();
-            $table->decimal('price',10,2);
+            $table->string('document_number');
+            $table->foreignId('place_id')->constrained(); 
+            $table->decimal('amount',10,2)->nullable();
             $table->dateTime('leaving_date')->nullable();
             $table->timestamps();
         });
